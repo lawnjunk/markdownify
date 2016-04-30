@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+export red_bold cyan_bold white_bold reset yellow_bold white
+red_bold="$(tput setaf 1)$(tput bold)"
+cyan_bold="$(tput setaf 6)$(tput bold)"
+yellow_bold="$(tput setaf 3)$(tput bold)"
+white_bold="$(tput setaf 15)$(tput bold)"
+white="$(tput setaf 15)"
+reset="$(tput sgr0)"
+warn(){
+  echo "${yellow_bold}WARNING:${white}" "$@" "${reset}"
+}
+notice(){
+  echo "${cyan_bold}NOTICE:${white}" "$@" "${reset}"
+}
+die(){
+  echo "${red_bold}FATAL ERROR:${white}" "$@" "${reset}"
+  exit 1
+}
+extname(){
+  local filepath
+  filepath="$1"
+  echo "${filepath/*./}"
+}
+main(){
+  local ext
+  ext=$(extname "$1");
+  warn "$ext"
+  notice "$ext"
+  die "$ext"
+}
+main "$@"
